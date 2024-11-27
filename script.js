@@ -1,5 +1,6 @@
 let city;
 let dataToSend;
+const response = document.querySelector(".response");
 
 const fetchAndSendData = async (city) => {
   try {
@@ -37,9 +38,10 @@ const fetchAndSendData = async (city) => {
     }
 
     const result = await sendData.json();
-    console.log("Data successfully sent:", result);
+    response.innerText = `Data successfully sent: id ${result.id}`;
   } catch (error) {
     console.error(error.message);
+    response.innerText = error.message;
   }
 };
 
@@ -47,8 +49,9 @@ const fetchAndSendData = async (city) => {
 const submitForm = document.querySelector(".form");
 submitForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  city = document.querySelector(".city").value;
+  city = document.querySelector(".city");
   if (city) {
-    fetchAndSendData(city);
+    fetchAndSendData(city.value);
+    city.value = "";
   }
 });
